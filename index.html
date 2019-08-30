@@ -47,14 +47,15 @@
         var newGame = true;
         var gameOver = false;
         var gameWord;
-        var guesses;
-        var guessArr = [];
+        var guesses = [];
+        var ans;
 
         document.onkeyup = function (event) {
             // Init new game, this if only triggers on a new game
             if (newGame) {
                 gameWord = words[Math.floor(Math.random() * words.length)];
-                guesses = 15;
+
+                ans = "";
                 for (i = 0; i < gameWord.length; i++) {
                     document.getElementById('current').innerHTML += "_ "
                 }
@@ -62,21 +63,28 @@
             }
             // This if contains everything that happens when the game is going
             if (gameOver === false && newGame === false) {
-                guessArr.push(event.key);
+                guesses.push(event.key);
                 // Tracking wrong guesses
                 if (gameWord.indexOf(event.key) < 0) {
                     console.log('wrong');
-                    guesses--;
-                    document.getElementById('guesses-left').innerHTML = guesses;
+                    document.getElementById('guesses-left').innerHTML = 15 - guesses.length;
                 }
                 // Tracking right guesses
-                else if(gameWord.indexOf(event.key) >= 0){
+                else if (gameWord.indexOf(event.key) >= 0) {
+                    ans = "";
                     console.log('right');
-                    for(i = 0; i < guessArr.length; i++){
-                        
+                    for (i = 0; i < gameWord.length; i++) {
+                        console.log('loop running');
+                        if (guesses.indexOf(gameWord[i]) >= 0) {
+                            console.log('working');
+                            ans += gameWord[i];
+                        } else {
+                            ans += "_ ";
+                        }
                     }
                 }
-                document.getElementById('guesslist') = guessArr;
+                document.getElementById('current').innerHTML = ans;
+                document.getElementById('guesslist').innerHTML += event.key + ", ";
             }
 
             // What to do on gameOver
