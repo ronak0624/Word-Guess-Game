@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row text-center mt-5">
+            <h1>Hangman</h1>
+        </div>
+        <div class="row mt-5">
+            <div class="col">
+                <h3>Press any key to begin!</h3>
+                <h3 id="win-counter">Wins: 0</h3>
+                <br>
+                <h3>Current Word</h3>
+                <h3 id="current"></h3>
+                <h3>Guesses Left</h3>
+                <h3 id="guesses-left">15</h3>
+                <h3>Letters Guessed</h3>
+                <p id="guesslist"></p>
+            </div>
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    <script>
+        var words = ["apple", "banana", "peach", "potato", "xylophone"];
+        var newGame = true;
+        var gameOver = false;
+        var gameWord;
+        var guesses;
+        var guessArr = [];
+
+        document.onkeyup = function (event) {
+            // Init new game, this if only triggers on a new game
+            if (newGame) {
+                gameWord = words[Math.floor(Math.random() * words.length)];
+                guesses = 15;
+                for (i = 0; i < gameWord.length; i++) {
+                    document.getElementById('current').innerHTML += "_ "
+                }
+                newGame = false;
+            }
+            // This if contains everything that happens when the game is going
+            if (gameOver === false && newGame === false) {
+                guessArr.push(event.key);
+                // Tracking wrong guesses
+                if (gameWord.indexOf(event.key) < 0) {
+                    console.log('wrong');
+                    guesses--;
+                    document.getElementById('guesses-left').innerHTML = guesses;
+                }
+                // Tracking right guesses
+                else if(gameWord.indexOf(event.key) >= 0){
+                    console.log('right');
+                    for(i = 0; i < guessArr.length; i++){
+                        
+                    }
+                }
+                document.getElementById('guesslist') = guessArr;
+            }
+
+            // What to do on gameOver
+            else if (guesses === 0) {
+                gameOver = true;
+                newGame = true;
+            }
+
+        }
+    </script>
+</body>
+
+</html>
